@@ -16,5 +16,5 @@ library(shinythemes)
 ```
 library(shiny)
 
-shiny::runGitHub('SARS-CoV2-COMRADES-APP','JLP_BioInf')
+shiny::runGitHub('SARS-CoV2-COMRADES-APP','JLP-BioInf')
 ```
