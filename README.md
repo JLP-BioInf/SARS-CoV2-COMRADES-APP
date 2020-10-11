@@ -1,5 +1,7 @@
 # R Shiny App for exporation and download of SARS-CoV2 COMRADES data
 
+This is an ongoing development and will be updated soon. More things to come. 
+
 ## Required R Libraries
 
 ```
