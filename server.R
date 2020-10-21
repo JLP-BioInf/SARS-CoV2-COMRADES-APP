@@ -194,6 +194,56 @@ server <- function(input, output, session) {
     
   }, deleteFile = F)
   
+  output$structure2 <- renderPlot({
+    clickData <- event_data("plotly_relayout", source = "heat_plot")
+    clickDataOld = clickData
+    if (is.null(clickData)){
+      clickData = list()
+      clickData$`xaxis.range[0]` = 0
+      clickData$`xaxis.range[1]` = 30000
+      clickData$`yaxis.range[0]` = 0
+      clickData$`yaxis.range[1]` = 30000
+    }
+    # return(NULL)
+    t = clusterPositionsListTrimmedSarsCombinedWithStructures
+    
+    row.names(t) = NULL
+    t = t[t$ls >= clickData$`xaxis.range[0]` &
+            t$le <= clickData$`xaxis.range[1]` &
+            t$rs >= clickData$`yaxis.range[0]` &
+            t$re <= clickData$`yaxis.range[1]`,]  
+    t = t[order(t$size.x, decreasing = T),]
+    
+    index = input$clusterTable_row_last_clicked
+    index = t[index,]
+    print(index$ls)
+    
+   # outfile <- tempfile(fileext = '.vienna')
+  #  writeLines(c(">x",paste(index[,"seq1new"],index[,"seq2new"], sep ="  "),
+  #               sub("&","  ",index[,"vienna"])), "./programs/vienna.vienna")
+    
+    
+    ct=makeCt( seq = paste(index[,"seq1new"],index[,"seq2new"], sep =""),
+              struct = sub("&","",index[,"vienna"])
+    )
+    
+    
+    dat=ct2coord(ct)
+    RNAPlot(dat,nt = T,tsize = 0.6)
+    #print(c(">x",paste(index[,"seq1new"],index[,"seq2new"], sep =""),
+    #        sub("&","",index[,"vienna"])))
+    #annotString = paste("-annotations ",'"',(index[,"ls"]+9),":anchor=",10,';',index[,"re"],":anchor=",nchar(sub("&","  ",index[,"vienna"])),'"', sep = "")
+    #command = paste("java -cp ./programs/VARNAv3-93.jar fr.orsay.lri.varna.applications.VARNAcmd -i ./programs/vienna.vienna -o ./programs/output.svg", annotString)
+    #print(command)
+    #x = system(command,intern = T)
+    
+    #list(src = "./programs/output.svg",
+    #     contentType = "image/svg+xml",
+    #     height = 1600,
+    #     width = 1200)
+    
+  })#, deleteFile = F)
+  
   
 }
 
