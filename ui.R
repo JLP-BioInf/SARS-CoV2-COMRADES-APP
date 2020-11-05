@@ -50,10 +50,10 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                  ),#end of tab1
                  tabPanel("Data Download",
                           h1("All raw reads can be downloaded from the SRA:"),
-                          h1("https://www.ncbi.nlm.nih.gov/sra?term=SRP272408"),
+                          h3("https://www.ncbi.nlm.nih.gov/sra?term=SRP272408"),
                           h1("Processed duplexes can be downloaded from GEO: "),
                           h3("https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE154662"),
-                          h2(),
+             
                           
                           )
                  
