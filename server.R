@@ -100,7 +100,11 @@ server <- function(input, output, session) {
     autoWidth = TRUE,
     ordering = TRUE,
     dom = 'tB',
-    buttons = c('copy', 'csv', 'excel')
+    buttons = c('copy', 'csv', 'excel'),
+    initComplete = JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'color': '#fff'});",
+      "}")
   ),
   
   class = "display")
@@ -108,6 +112,11 @@ server <- function(input, output, session) {
   ######################################################
   # END - data table 
   ######################################################
+
+  
+  
+  
+  
   
   ######################################################
   # Sequence
@@ -218,10 +227,7 @@ server <- function(input, output, session) {
     index = t[index,]
     print(index$ls)
     
-   # outfile <- tempfile(fileext = '.vienna')
-  #  writeLines(c(">x",paste(index[,"seq1new"],index[,"seq2new"], sep ="  "),
-  #               sub("&","  ",index[,"vienna"])), "./programs/vienna.vienna")
-    
+
     
     ct=makeCt( seq = paste(index[,"seq1new"],index[,"seq2new"], sep =""),
               struct = sub("&","",index[,"vienna"])
@@ -230,19 +236,9 @@ server <- function(input, output, session) {
     
     dat=ct2coord(ct)
     RNAPlot(dat,nt = T,tsize = 0.6)
-    #print(c(">x",paste(index[,"seq1new"],index[,"seq2new"], sep =""),
-    #        sub("&","",index[,"vienna"])))
-    #annotString = paste("-annotations ",'"',(index[,"ls"]+9),":anchor=",10,';',index[,"re"],":anchor=",nchar(sub("&","  ",index[,"vienna"])),'"', sep = "")
-    #command = paste("java -cp ./programs/VARNAv3-93.jar fr.orsay.lri.varna.applications.VARNAcmd -i ./programs/vienna.vienna -o ./programs/output.svg", annotString)
-    #print(command)
-    #x = system(command,intern = T)
+
     
-    #list(src = "./programs/output.svg",
-    #     contentType = "image/svg+xml",
-    #     height = 1600,
-    #     width = 1200)
-    
-  })#, deleteFile = F)
+  })
   
   
 }
