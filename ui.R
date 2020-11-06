@@ -20,7 +20,7 @@ ui <- navbarPage(theme = shinytheme("superhero"),
   title = "SARS-CoV2 COMRADES",
                  tabPanel("SARS2 MERS Compairson",
                           h4("This Shiny app allows you to explore the results from the publication: The short- and long-range RNA-RNA Interactome of SARS-CoV-2"),
-                          h4("https://www.cell.com/molecular-cell/fulltext/S1097-2765(20)30782-6"),
+                          uiOutput("moCell"),
                           h4("https://doi.org/10.1016/j.molcel.2020.11.004"),
                           h1("Contact maps of SARS-CoV2 and MERS"),
                           h4("The heatmaps show the clusters of duplex reads for SARS-CoV-2 and MERS. They are interactive, by zooming in one one of the heatmaps the other will zoom to the same co-ordinates. Double click to zoom out again.  "),
@@ -50,9 +50,10 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                  ),#end of tab1
                  tabPanel("Data Download",
                           h1("All raw reads can be downloaded from the SRA:"),
-                          h3("https://www.ncbi.nlm.nih.gov/sra?term=SRP272408"),
+                          uiOutput("sraURL"),
+          
                           h1("Processed duplexes can be downloaded from GEO: "),
-                          h3("https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE154662"),
+                          uiOutput("geoURL"),
              
                           
                           )
