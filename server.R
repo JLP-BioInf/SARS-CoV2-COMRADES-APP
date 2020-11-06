@@ -239,6 +239,23 @@ server <- function(input, output, session) {
 
     
   })
+
+  
+  output$moCell <- renderUI({
+    mocellURL = a("Publication Link (Molecular Cell)", href = "https://www.cell.com/molecular-cell/fulltext/S1097-2765(20)30782-6")
+    tagList(mocellURL)
+  })
+  
+  output$geoURL <- renderUI({
+    geoURL = a("Processed Duplexes (GEO)", href = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE154662")
+    tagList(geoURL)
+  })
+  
+
+  output$sraURL <- renderUI({
+    sraURL = a("Raw Reads (SRA)", href = "https://www.ncbi.nlm.nih.gov/sra?term=SRP272408")
+    tagList(sraURL)
+  })
   
   
 }
