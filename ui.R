@@ -59,7 +59,7 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                           
                           ), #end of tab 2
                 tabPanel("SARS vs Host RNA",
-                    
+                    h1("Coming soon!")
            
            
                 )
