@@ -22,6 +22,7 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                           h4("This Shiny app allows you to explore the results from the publication: The short- and long-range RNA-RNA Interactome of SARS-CoV-2"),
                           uiOutput("moCell"),
                           h4("https://doi.org/10.1016/j.molcel.2020.11.004"),
+                          h4("This tab allows you to explore and download the clusters of SARS-CoV-2 and MERS structural data."),
                           h1("Contact maps of SARS-CoV2 and MERS"),
                           h4("The heatmaps show the clusters of duplex reads for SARS-CoV-2 and MERS. They are interactive, by zooming in one one of the heatmaps the other will zoom to the same co-ordinates. Double click to zoom out again.  "),
                           
@@ -29,7 +30,7 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                           fluidRow(
                             splitLayout(cellWidths = "550px", 
                             plotlyOutput("heatSample",width = "500px", height = "450px"),#)),
-                            #h1("Contact maps of MERS"),
+                            #h1("Contact maps o f MERS"),
                             plotlyOutput("heatControl",width = "500px", height = "450px") )),
                           linebreaks(5),
                           hr(),
@@ -56,7 +57,12 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                           uiOutput("geoURL"),
              
                           
-                          )
+                          ), #end of tab 2
+                tabPanel("SARS vs Host RNA",
+                    
+           
+           
+                )
                  
                  
                  
