@@ -5,11 +5,15 @@ library(DT)
 library(RRNA)
 library(shinydashboard)
 library(shinythemes)
-
+library(reshape2)
+library(ggplot2)
+library(stringr)
 
 # cache computation of the correlation matrix
 load("./data/dataForShiny2.RData")
 load("./data/clusterPositionsWithStructures.RData")
+load("./data/sarsHost.RData")
+
 myCol = c("#000000","#000000","#000000","#000000",colorRampPalette(brewer.pal(8,"YlOrRd"))(40))
 server <- function(input, output, session) {
   
@@ -219,6 +223,135 @@ server <- function(input, output, session) {
   output$sraURL <- renderUI({
     sraURL = a("Raw Reads (SRA)", href = "https://www.ncbi.nlm.nih.gov/sra?term=SRP272408")
     tagList(sraURL)
+  })
+  
+  
+  
+  
+  ######################################################
+  # Host RNA Table
+  ######################################################
+  
+  output$geneTable <- renderDataTable({
+    
+  
+  ints
+    
+  },
+  
+  extensions = 'Buttons',
+  
+  options = list(
+    paging = TRUE,
+    searching = TRUE,
+    fixedColumns = TRUE,
+    autoWidth = TRUE,
+    ordering = TRUE,
+    dom = 'tB',
+    buttons = c('copy', 'csv', 'excel'),
+    initComplete = JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'color': '#fff'});",
+      "}")
+  ),
+  
+  class = "display")
+  
+  
+  
+  ######################################################
+  # Host RNA Plot
+  ######################################################
+  
+  output$hostRNAPlot = renderPlot({
+    index = input$geneTable_row_last_clicked
+    if(is.null(index)){index = 1}
+    print(index)
+    gene = ints[index,]
+    ggplotTable = melt(gene, measure.vars =c("SARS2_1C",
+                                                  "SARS2_1S",
+                                                  "SARS2_2C",
+                                                  "SARS2_1S"),id.vars = c("symbol"))
+    
+    ggplot() +
+      geom_point(data = ggplotTable, aes(x = str_sub(variable,  start= -1), y = value, colour = str_sub(variable,  start= -1))) +
+      labs(colour = "Sample") +
+      ylim(0, max(ggplotTable$value)+1)+
+      xlab("Control or Sample") +
+      ylab("Number of Duplexes") + 
+      theme_classic() 
+    
+    
+  })
+  
+  output$rawHostTable <- renderDataTable({
+    index = input$geneTable_row_last_clicked
+    if(is.null(index)){index = 1}
+    print(index)
+    gene = ints[index,]$full
+    
+    intra[intra$V10 == as.character(gene),]
+    
+  },
+  
+  extensions = 'Buttons',
+  
+  options = list(
+    paging = TRUE,
+    searching = TRUE,
+    fixedColumns = TRUE,
+    autoWidth = TRUE,
+    ordering = TRUE,
+    dom = 'tB',
+    buttons = c('copy', 'csv', 'excel'),
+    initComplete = JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'color': '#fff'});",
+      "}")
+  ),
+  
+  class = "display")
+  
+  
+  
+  output$hostBar = renderPlotly({
+    seq2 <- Vectorize(seq.default, vectorize.args = c("from", "to"))
+    index = input$geneTable_row_last_clicked
+    if(is.null(index)){index = 1}
+    print(index)
+    gene = ints[index,]$full
+    
+    t = intra[intra$V10 == as.character(gene),]
+    
+    vec = unlist(seq2(from = c(t$V7), to = c(t$V8)))
+    pos = as.data.frame(table(vec))
+    
+      
+    
+    plot_ly(data = pos,
+            type = "bar",
+            x = ~ vec, 
+            y = ~ Freq)
+  })
+  
+  output$hostBar2 = renderPlotly({
+    seq2 <- Vectorize(seq.default, vectorize.args = c("from", "to"))
+    index = input$geneTable_row_last_clicked
+    if(is.null(index)){index = 1}
+    print(index)
+    gene = ints[index,]$full
+    
+    t = intra[intra$V10 == as.character(gene),]
+    
+    vec = unlist(seq2(from = c(t$V13), to = c(t$V14)))
+    pos = as.data.frame(table(vec))
+    
+    
+    
+    plot_ly(data = pos,
+            type = "bar",
+            x = ~ vec, 
+            y = ~ Freq)
   })
   
   
