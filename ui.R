@@ -5,11 +5,15 @@ library(DT)
 library(RRNA)
 library(shinydashboard)
 library(shinythemes)
+library(reshape2)
+library(ggplot2)
+library(stringr)
 
 
 # cache computation of the correlation matrix
 load("./data/dataForShiny2.RData")
 load("./data/clusterPositionsWithStructures.RData")
+load("./data/sarsHost.RData")
 myCol = c("#000000","#000000","#000000","#000000",colorRampPalette(brewer.pal(8,"YlOrRd"))(40))
 
 
