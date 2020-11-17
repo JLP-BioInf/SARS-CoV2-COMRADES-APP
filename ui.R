@@ -9,14 +9,10 @@ library(reshape2)
 library(ggplot2)
 library(stringr)
 
-
 # cache computation of the correlation matrix
 load("./data/dataForShiny2.RData")
 load("./data/clusterPositionsWithStructures.RData")
 load("./data/sarsHost.RData")
-myCol = c("#000000","#000000","#000000","#000000",colorRampPalette(brewer.pal(8,"YlOrRd"))(40))
-
-
 
 linebreaks <- function(n){HTML(strrep(br(), n))}
 
@@ -63,7 +59,16 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                           
                           ), #end of tab 2
                 tabPanel("SARS vs Host RNA",
-                    h1("Coming soon!")
+                         h1("This tab allows the exploration and download of data for the interaction of SARS-CoV-2 and the host RNA in Vero Cells"),
+                         h3("Table below shows each hostRNA that duplexes were obtained for clicking on a row will produce plots and tables below for that RNA"),
+                         dataTableOutput("geneTable"),
+                         plotOutput("hostRNAPlot"),
+                         h3("Below is a table containing the raw data for the RNA that was selected in the first table"),
+                         dataTableOutput("rawHostTable"),
+                         h3("Below is plot showing where on the SARS-CoV-2 genome this RNA binds"),
+                         plotlyOutput("hostBar"),
+                         h3("Below is plot showing which part of the selected RNA binds to the SARS-CoV-2 genome"),
+                         plotlyOutput("hostBar2"),
            
            
                 )
