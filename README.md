@@ -12,6 +12,9 @@ library(DT)
 library(RRNA)
 library(shinydashboard)
 library(shinythemes)
+library(reshape2)
+library(ggplot2)
+library(stringr)
 ```
 
 ## Run the app from R with:
