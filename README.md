@@ -1,6 +1,5 @@
 # R Shiny App for exporation and download of SARS-CoV2 COMRADES data
 
-You can now explore the structure of SARS-CoV-2 and the interactions with the host RNA in Vero cells!
 
 This is an ongoing development and will be updated soon. More things to come. If you would like to contribute or suggest any additiojnal features, please just get in touch. 
 
